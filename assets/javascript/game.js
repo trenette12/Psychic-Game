@@ -1,15 +1,17 @@
 
 var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h','i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
  'u', 'v', 'w', 'x', 'y', 'z']; 
-var wins = 0;
-var losses = 0;
-
 // guessedLetters = [];
 var secretLetter = "";
-var guessesLeft = 10;
-var randomLetter = Math.floor(Math.random() * 10);
+var randomLetter = Math.floor(Math.random() * 26);
 var guessesLeft = document.getElementById("guessesleft");
 var keyPressed;
+var howManyGuesses = 10;
+var userLost = 1;
+
+function gameOver() {
+	location.reload(true);
+}
 
 document.onkeyup = function GetChar (event){
            var keyCode = ('which' in event) ? event.which : event.keyCode;
@@ -18,36 +20,25 @@ document.onkeyup = function GetChar (event){
 
 	
 		secretLetter = letters[randomLetter];
+		
 		if (keyPressed === secretLetter) {
 			console.log("You win!");
-			wins++ ; 
+			var wins = document.getElementById("userwins");
+			theUserWins = 0;
+			wins.innerHTML = theUserWins++;
 		}
 			else {
 				console.log("Guess again!");
-				losses++ ;
 				var guessedLetters = document.getElementById("userguesses");
-				guessedLetters.innerHTML = guessedLetters.innerHTML + (keyPressed);
-				
+				guessedLetters.innerHTML = guessedLetters.innerHTML + (keyPressed + " ");
+				var guessesLeft = document.getElementById("guessesleft");
+				guessesLeft.innerHTML = howManyGuesses--;
+				if (howManyGuesses < 0) {
+					alert("Sorry, Game Over!");
+					var losses = document.getElementById("userlosses");
+					losses.innerHTML  = userLost++;
+					// gameOver();
+				}
+
 			}
-		
     };
-
-	
-	// function userGuessedIt() {
-	// 	var userGuess = String.fromCharCode(e.keyCode);
-	// 	userGuess = userGuess.toLowerCase();
-	// 	if (userGuess === secretLetter) {
-	// 		wins ++;
-	// 		gameOver = true;
-	// 		else {
-	// 			guessesLeft --;
-	// 			guessedLetters.push(userGuess);
-	// 			gameOver = false;
-	// 		}
-	// 	}7
-// }
-
-// // document.getElementById("userinput").addEventListener("keypress", startGame);
-
-
-// }
